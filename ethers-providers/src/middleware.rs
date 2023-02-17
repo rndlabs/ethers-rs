@@ -443,6 +443,11 @@ pub trait Middleware: Sync + Send + Debug {
         self.inner().get_accounts().await.map_err(MiddlewareError::from_err)
     }
 
+    #[cfg(all(feature = "eip1193"))]
+    async fn request_accounts(&self) -> Result<Vec<Address>, Self::Error> {
+        self.inner().request_accounts().await.map_err(MiddlewareError::from_err)
+    }
+
     /// Send the raw RLP encoded transaction to the entire Ethereum network and returns the
     /// transaction's hash This will consume gas from the account that signed the transaction.
     async fn send_raw_transaction<'a>(

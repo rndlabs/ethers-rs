@@ -29,5 +29,10 @@ pub mod legacy_ws;
 #[cfg(feature = "legacy-ws")]
 pub use legacy_ws::{ClientError as WsClientError, Ws};
 
+#[cfg(all(feature = "eip1193", target_arch = "wasm32"))]
+mod eip1193;
+#[cfg(all(feature = "eip1193", target_arch = "wasm32"))]
+pub use eip1193::Eip1193;
+
 mod mock;
 pub use mock::{MockError, MockProvider, MockResponse};
