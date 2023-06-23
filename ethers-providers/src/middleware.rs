@@ -448,6 +448,16 @@ pub trait Middleware: Sync + Send + Debug {
         self.inner().request_accounts().await.map_err(MiddlewareError::from_err)
     }
 
+    /// Implements typed data signing according to EIP712
+    #[cfg(feature = "eip1193")]
+    async fn sign_typed_data<T: Into<Bytes> + Send + Sync>(
+        &self,
+        data: T,
+        from: &Address,
+    ) -> Result<Signature, ProviderError> {
+        self.inner().sign_typed_data(data, from).await.map_err(MiddlewareError::from_err)
+    }
+
     /// Send the raw RLP encoded transaction to the entire Ethereum network and returns the
     /// transaction's hash This will consume gas from the account that signed the transaction.
     async fn send_raw_transaction<'a>(
