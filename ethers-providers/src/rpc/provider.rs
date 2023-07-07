@@ -477,7 +477,7 @@ impl<P: JsonRpcClient> Middleware for Provider<P> {
 
     /// Signs typed data using a specific account (EIP712). This account needs to be unlocked.
     #[cfg(feature = "eip1193")]
-    async fn sign_typed_data<T: Into<Bytes> + Send + Sync>(
+    async fn sign_typed_data<T: Into<Bytes> + Send + Sync + Serialize>(
         &self,
         data: T,
         from: &Address,

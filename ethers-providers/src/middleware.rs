@@ -450,7 +450,8 @@ pub trait Middleware: Sync + Send + Debug {
 
     /// Implements typed data signing according to EIP712
     #[cfg(feature = "eip1193")]
-    async fn sign_typed_data<T: Into<Bytes> + Send + Sync>(
+    async fn sign_typed_data<T: Into<Bytes> + Send + Sync + Serialize>
+        (
         &self,
         data: T,
         from: &Address,
