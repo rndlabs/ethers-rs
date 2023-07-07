@@ -1,10 +1,9 @@
 use super::common::JsonRpcError;
-use crate::{provider::ProviderError, JsonRpcClient};
+use crate::{errors::ProviderError, JsonRpcClient};
 use async_trait::async_trait;
 use serde::{de::DeserializeOwned, Serialize};
 use thiserror::Error;
 use wasm_bindgen::{prelude::*, closure::Closure, JsValue};
-use gloo_utils::format::JsValueSerdeExt;
 
 #[wasm_bindgen]
 pub struct Request {
@@ -101,6 +100,16 @@ impl From<Eip1193Error> for ProviderError {
     }
 }
 
+impl crate::RpcError for Eip1193Error {
+    fn as_error_response(&self) -> Option<&super::JsonRpcError> {
+        None
+    }
+
+    fn as_serde_error(&self) -> Option<&serde_json::Error> {
+        None
+    }
+}
+
 impl From<JsValue> for Eip1193Error {
     fn from(src: JsValue) -> Self {
         Eip1193Error::JsValueError(format!("{:?}", src))
@@ -151,4 +160,3 @@ impl Eip1193 {
     }
 
 }
-
