@@ -4,6 +4,7 @@ use async_trait::async_trait;
 use serde::{de::DeserializeOwned, Serialize};
 use thiserror::Error;
 use wasm_bindgen::{prelude::*, closure::Closure, JsValue};
+use gloo_utils::format::JsValueSerdeExt;
 
 #[wasm_bindgen]
 pub struct Request {
